@@ -31,7 +31,6 @@ export const PokemonForm: React.FC = () => {
         />
         {errors.lastName && <span className="text-red-500">Last name is required (2-12 characters, only letters).</span>}
       </label>
-
       <button
         type="submit"
         className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue"

@@ -2,12 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { fetchPokemonDetails } from '../../api/fetchPokemon';
 import { LoadingIndicator } from '../spinner/Spinner';
 
-interface PokemonInfoProps {
+type Props = {
   name: string;
   onClose: () => void;
 }
 
-export const PokemonInfo: React.FC<PokemonInfoProps> = ({ name, onClose }) => {
+export const PokemonInfo: React.FC<Props> = ({ name, onClose }) => {
   const [pokemonDetails, setPokemonDetails] = useState<any | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
