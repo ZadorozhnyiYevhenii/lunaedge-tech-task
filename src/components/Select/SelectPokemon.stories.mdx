@@ -1,0 +1,32 @@
+import { Meta, Story } from '@storybook/addon-docs/blocks';
+import { SelectPokemon } from "./SelectPokemon";
+
+<Meta title="SelectPokemon" component={SelectPokemon} />
+
+# Select Pokemon Component
+The `SelectPokemon` component allows users to select Pokemon and form a team. It provides a dropdown with a search feature, a list of selectable Pokemon, and a display of the selected Pokemon team.
+
+-Fetches a list of Pokemon from an API.
+-Allows users to select up to four Pokemon for their team.
+-Displays selected Pokemon and team details.
+-Provides a search feature to filter Pokemon in the dropdown.
+
+## Additional Information
+- label: The label for the dropdown.
+- backgroundColor: Background color of the component.
+- border: Border color of the dropdown.
+- fontSize: Font size for the text.
+- fontColor: Font color for the text.
+
+
+## Usage
+
+```jsx
+<SelectPokemon
+  label="Select Pokemon Team"
+  backgroundColor="white"
+  border="gray-300"
+  fontSize="text-base"
+  fontColor="text-black"
+  padding="p-4"
+/>

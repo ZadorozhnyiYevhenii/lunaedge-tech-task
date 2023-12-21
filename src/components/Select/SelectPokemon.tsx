@@ -6,18 +6,30 @@ import { TeamDetails } from '../SelectedTeam/SelectedTeam';
 import { Dropdown } from '../DropDown/DropDown';
 import { PokemonTeam } from '../PokemonTeam/PokemonTeam';
 
-type Props = {
+export type PropsSelect = {
   label: string;
-  register: any;
-}
+  backgroundColor?: string;
+  border?: string;
+  fontSize?: string;
+  fontColor?: string;
+  padding?: string;
+};
 
-export const SelectPokemon: React.FC<Props> = ({ label, register }) => {
-  const { control, handleSubmit } = useForm();
+export const SelectPokemon: React.FC<PropsSelect> = ({
+  label,
+  border = 'gray-300',
+  backgroundColor = 'white',
+  fontSize = 'text-base',
+  fontColor = 'text-black',
+  padding = 'p-4',
+}) => {
+  const { handleSubmit } = useForm();
   const [pokemonList, setPokemonList] = useState<{ name: string }[]>([]);
   const [selectedPokemons, setSelectedPokemons] = useState<string[]>([]);
   const [selectedPokemon, setSelectedPokemon] = useState<string | null>(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [teamDetails, setTeamDetails] = useState<any[]>([]);
+  const [searchTerm, setSearchTerm] = useState<string>('');
 
   useEffect(() => {
     const fetchData = async () => {
@@ -29,19 +41,13 @@ export const SelectPokemon: React.FC<Props> = ({ label, register }) => {
   }, []);
 
   const handleSelectChange = (selectedPokemon: string) => {
-    if (!selectedPokemons.includes(selectedPokemon)) {
-      if (selectedPokemons.length < 4) {
-        setSelectedPokemons([...selectedPokemons, selectedPokemon]);
-      }
+    if (selectedPokemons.length < 4 && !selectedPokemons.includes(selectedPokemon)) {
+      setSelectedPokemons([...selectedPokemons, selectedPokemon]);
     }
   };
 
   const handleRemovePokemon = (pokemon: string) => {
-    setSelectedPokemons((prevPokemons) => {
-      const updatedPokemons = prevPokemons.filter((p) => p !== pokemon);
-      console.log(updatedPokemons);
-      return updatedPokemons;
-    });
+    setSelectedPokemons((prevPokemons) => prevPokemons.filter((p) => p !== pokemon));
   };
 
   const handleInfoButtonClick = async (pokemonName: string) => {
@@ -56,9 +62,13 @@ export const SelectPokemon: React.FC<Props> = ({ label, register }) => {
     setIsDropdownOpen(!isDropdownOpen);
   };
 
+  const handleSearchChange = (search: string) => {
+    setSearchTerm(search);
+  };
+
   const onSubmit = async () => {
     if (selectedPokemons.length === 4) {
-      const detailsPromises = selectedPokemons.map((pokemon) => fetchPokemonDetails(pokemon));
+      const detailsPromises = selectedPokemons.map(fetchPokemonDetails);
       const details = await Promise.all(detailsPromises);
       const validDetails = details.filter((detail) => detail);
 
@@ -68,20 +78,34 @@ export const SelectPokemon: React.FC<Props> = ({ label, register }) => {
     }
   };
 
+  const filteredPokemonList = pokemonList.filter((pokemon) =>
+    pokemon.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-      <div className="w-3/4 h-3/4 max-w-screen-xl mx-auto p-4 bg-white shadow-md rounded relative">
+    <div className={`fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 ${padding}`}>
+      <div className={`w-3/4 h-3/4 max-w-screen-xl mx-auto ${padding} bg-${backgroundColor} shadow-md rounded relative`}>
         <div className="relative">
           <div
-            className="cursor-pointer w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 flex justify-between"
+            className={`cursor-pointer w-full p-2 border border-${border} rounded focus:outline-none focus:border-blue-500 flex justify-between ${fontColor} ${fontSize}`}
             onClick={handleDropdownClick}
           >
-            <label className="block mb-2 font-bold text-lg">{label}</label>
+            <label className={`block mb-2 font-bold text-lg ${fontColor}`}>{label}</label>
             <div className="flex items-center justify-between">
               <span>▼</span>
             </div>
           </div>
-          {isDropdownOpen && <Dropdown pokemonList={pokemonList} onSelectChange={handleSelectChange} />}
+          {isDropdownOpen && (
+            <>
+              <input
+                type="text"
+                placeholder="Search Pokémon..."
+                className={`p-2 border border-gray-300 rounded mt-2 w-full ${fontColor} ${fontSize}`}
+                onChange={(e) => handleSearchChange(e.target.value)}
+              />
+              <Dropdown pokemonList={filteredPokemonList} onSelectChange={handleSelectChange} />
+            </>
+          )}
         </div>
         {selectedPokemons.length > 0 && (
           <PokemonTeam
@@ -93,9 +117,7 @@ export const SelectPokemon: React.FC<Props> = ({ label, register }) => {
         )}
         {teamDetails.length > 0 && <TeamDetails teamDetails={teamDetails} />}
       </div>
-      {selectedPokemon && (
-        <PokemonInfo name={selectedPokemon} onClose={handleCloseInfo} />
-      )}
+      {selectedPokemon && <PokemonInfo name={selectedPokemon} onClose={handleCloseInfo} />}
     </div>
   );
 };

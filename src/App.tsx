@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { PokemonForm } from './components/PokemonForm/PokemonForm';
-import  {SelectPokemon}  from './components/Select/Select';
+import  {SelectPokemon}  from './components/Select/SelectPokemon';
 
 const App: React.FC = () => {
   return (
@@ -10,7 +10,7 @@ const App: React.FC = () => {
       <Router>
         <Routes>
           <Route path="/" element={<PokemonForm />} />
-          <Route path="/select" element={<SelectPokemon label="Choose your hero😎" register={'da'}/>} />
+          <Route path="/select" element={<SelectPokemon label="Choose your hero😎"/>} />
         </Routes>
       </Router>
     </div>
