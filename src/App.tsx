@@ -7,7 +7,7 @@ const App: React.FC = () => {
   return (
     <Router>
       <Routes>
-        <Route index element={<PokemonForm />} />
+        <Route path='/' element={<PokemonForm />} />
         
         <Route path="/select" element={<SelectPokemon label="Choose your hero😎" />} />
       </Routes>
