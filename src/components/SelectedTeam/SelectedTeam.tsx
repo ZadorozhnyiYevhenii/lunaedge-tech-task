@@ -19,7 +19,7 @@ export const TeamDetails: React.FC<TeamDetailsProps> = ({ teamDetails }) => (
           </li>
         ))}
       </ul>
-      <Link to="/" className="mt-8 bg-blue-500 text-white py-2 px-4 rounded text-lg">
+      <Link to="/lunaedge-tech-task" className="mt-8 bg-blue-500 text-white py-2 px-4 rounded text-lg">
         Back to Pokémon Selection
       </Link>
     </div>
