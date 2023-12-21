@@ -28,7 +28,6 @@ export const PokemonInfo: React.FC<Props> = ({ name, onClose }) => {
     fetchData();
   }, [name]);
 
-
   if (!pokemonDetails) {
     return null;
   }
