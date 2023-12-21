@@ -7,9 +7,9 @@ const App: React.FC = () => {
   return (
     <Router>
       <Routes>
-        <Route path='/' element={<PokemonForm />} />
+        <Route path='/lunaedge-tech-task' element={<PokemonForm />} />
         
-        <Route path="/select" element={<SelectPokemon label="Choose your hero😎" />} />
+        <Route path="/lunaedge-tech-task/select" element={<SelectPokemon label="Choose your hero😎" />} />
       </Routes>
     </Router>
   );
