@@ -8,7 +8,6 @@ const App: React.FC = () => {
     <Router>
       <Routes>
         <Route path='/lunaedge-tech-task' element={<PokemonForm />} />
-        
         <Route path="/select" element={<SelectPokemon label="Choose your hero😎" />} />
       </Routes>
     </Router>
