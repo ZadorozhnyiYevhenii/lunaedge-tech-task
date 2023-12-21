@@ -5,19 +5,21 @@ import { useNavigate } from 'react-router-dom';
 
 export const PokemonForm: React.FC = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   const onSubmitForm = (data: any) => {
     console.log('Form data submitted:', data);
     navigate('/select');
   };
 
-  return (
+  return (<div className="flex items-center justify-center h-screen flex-col">
+    <h1 className="text-3xl font-semibold mb-6 text-center">Pokémon Trainer Form</h1>
+
     <form onSubmit={handleSubmit(onSubmitForm)} className="max-w-md mx-auto mt-8 p-4 bg-white shadow-md rounded">
       <label className="block mb-2">
         First Name:
         <input
-          {...register('firstName', rules)} 
+          {...register('firstName', rules)}
           className="w-full p-2 border border-gray-300 rounded mt-1 focus:outline-none"
         />
         {errors.firstName && <span className="text-red-500">First name is required (2-12 characters, only letters).</span>}
@@ -38,5 +40,6 @@ export const PokemonForm: React.FC = () => {
         Submit
       </button>
     </form>
+  </div>
   );
 };
