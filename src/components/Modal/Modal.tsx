@@ -28,10 +28,6 @@ export const PokemonInfo: React.FC<Props> = ({ name, onClose }) => {
     fetchData();
   }, [name]);
 
-  if (!pokemonDetails) {
-    return null;
-  }
-
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
       {isLoading ? (
